@@ -4,10 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class JohnDeereCodingChallengeApplication {
+public class JDChallenge {
 
 	public static void main(String[] args) {
-		SpringApplication.run(JohnDeereCodingChallengeApplication.class, args);
+		SpringApplication.run(JDChallenge.class, args);
 	}
-
 }
