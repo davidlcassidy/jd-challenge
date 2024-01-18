@@ -2,6 +2,10 @@ package com.davidlcassidy.jdchallenge.controller;
 
 import com.davidlcassidy.jdchallenge.model.Event;
 import com.davidlcassidy.jdchallenge.model.EventDetails;
+import com.davidlcassidy.jdchallenge.service.EventService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,21 +18,16 @@ import java.util.List;
 @RequestMapping("/events")
 public class EventController {
 
+	@Autowired
+	private EventService eventService;
+
 	@GetMapping()
-	public List<Event> getEvents(
+	public ResponseEntity<List<Event>> getEvents(
 			@RequestParam(value = "machineId") String machineId,
 			@RequestParam(value = "sessionId") String sessionId) {
 
-		EventDetails eventDetails = new EventDetails();
-		eventDetails.setEventAt("2022-01-18T12:00:00");
-		eventDetails.setEventType(machineId + " - SampleEvent");
-		eventDetails.setNumericEventValue(42.0);
-
-		Event event = new Event();
-		event.setSessionId(sessionId);
-		event.setEvents(List.of(eventDetails));
-
-		return List.of(event);
+		List<Event> events = eventService.getByMachineIdAndSessionId(machineId, sessionId);
+		return new ResponseEntity<>(events, HttpStatus.OK);
 	}
 
 }
