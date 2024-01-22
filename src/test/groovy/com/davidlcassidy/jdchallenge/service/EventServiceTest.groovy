@@ -14,7 +14,7 @@ class EventServiceTest extends Specification {
     def numericEventValue = 42.0
 
     //Models
-    def session = new Session(sessionId: sessionId)
+    def session = Session.builder().sessionId(sessionId).build()
 
     // Repositories
     def sessionRepository = Mock(SessionRepository)
@@ -22,8 +22,8 @@ class EventServiceTest extends Specification {
 
     // Service
     EventService eventService = new EventService(
-        sessionRepository: sessionRepository,
-        eventRepository: eventRepository
+            sessionRepository: sessionRepository,
+            eventRepository: eventRepository
     )
 
     def "createEvent should create and save an event"() {
@@ -32,7 +32,7 @@ class EventServiceTest extends Specification {
 
         then:
         1 * sessionRepository.findBySessionId(sessionId) >> session
-        1 * sessionRepository.save(session) >> new Session()
+        1 * sessionRepository.save(session) >> Session.builder().build()
 
         and:
         result != null

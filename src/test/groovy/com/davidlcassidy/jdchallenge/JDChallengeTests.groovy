@@ -8,12 +8,12 @@ import spock.lang.Specification
 @ContextConfiguration(classes = JDChallenge)
 class JDChallengeTests extends Specification {
 
-	def "context loads successfully"() {
-		when:
-		JDChallenge jdChallenge = new JDChallenge()
+    def "context loads successfully"() {
+        when:
+        JDChallenge jdChallenge = new JDChallenge()
 
-		then:
-		notThrown(Exception)
-	}
+        then:
+        notThrown(Exception)
+    }
 }
 
