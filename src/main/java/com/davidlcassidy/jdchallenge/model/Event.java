@@ -1,10 +1,38 @@
 package com.davidlcassidy.jdchallenge.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
-import java.util.List;
+
+import java.util.Objects;
 
 @Data
+@Entity
 public class Event {
-	private String sessionId;
-	private List<EventDetails> events;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer eventId;
+	private String eventAt;
+	private String eventType;
+	private double numericEventValue;
+
+	@ManyToOne
+	@JoinColumn(name = "session_id", nullable = false)
+	@JsonIgnore
+	private Session session;
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(eventId, eventAt, eventType, numericEventValue);
+	}
+
+	@Override
+	public String toString() {
+		return "Event{" +
+			"eventId=" + eventId +
+			", eventAt='" + eventAt + '\'' +
+			", eventType='" + eventType + '\'' +
+			", numericEventValue=" + numericEventValue +
+			'}';
+	}
 }
