@@ -2,7 +2,6 @@ package com.davidlcassidy.jdchallenge.controller
 
 import com.davidlcassidy.jdchallenge.model.Session
 import com.davidlcassidy.jdchallenge.model.SessionAggregatedEvents
-import com.davidlcassidy.jdchallenge.service.EventService
 import com.davidlcassidy.jdchallenge.service.SessionService
 import org.springframework.http.HttpStatus
 import spock.lang.Specification
@@ -17,11 +16,9 @@ class SessionControllerTest extends Specification {
 
     // Services
     SessionService sessionService = Mock()
-    EventService eventService = Mock()
 
     // Controller
     SessionController sessionController = new SessionController(
-            eventService: eventService,
             sessionService: sessionService
     )
 

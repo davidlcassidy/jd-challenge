@@ -2,7 +2,6 @@ package com.davidlcassidy.jdchallenge.controller;
 
 import com.davidlcassidy.jdchallenge.model.Session;
 import com.davidlcassidy.jdchallenge.model.SessionAggregatedEvents;
-import com.davidlcassidy.jdchallenge.service.EventService;
 import com.davidlcassidy.jdchallenge.service.SessionService;
 import com.mysql.cj.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +19,6 @@ public class SessionController {
 
     @Autowired
     private SessionService sessionService;
-
-    @Autowired
-    private EventService eventService;
 
     Random random = new Random();
 
@@ -72,7 +68,7 @@ public class SessionController {
     private void createSampleSessionAndEvent() {
         String sessionId = String.valueOf(random.nextInt(100000));
         sessionService.createSession(sessionId, String.valueOf(random.nextInt(100000)), LocalDateTime.now());
-        eventService.createEvent(sessionId, "eventAtValue", "eventTypeValue", random.nextInt(100));
+        sessionService.createSessionEvent(sessionId, "eventAtValue", "eventTypeValue", random.nextInt(100));
     }
 
 }

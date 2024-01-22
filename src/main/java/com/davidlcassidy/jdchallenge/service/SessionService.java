@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -29,6 +28,25 @@ public class SessionService {
         Session session = Session.builder().sessionId(sessionId).machineId(machineId).startAt(startAt).build();
         sessionRepository.save(session);
         return session;
+    }
+
+    public Event createSessionEvent(String sessionId, String eventAt, String eventType, double numericEventValue) {
+        Session session = sessionRepository.findBySessionId(sessionId);
+
+        if (session != null) {
+            Event event = Event.builder()
+                    .eventAt(eventAt)
+                    .eventType(eventType)
+                    .numericEventValue(numericEventValue)
+                    .session(session)
+                    .build();
+
+            session.getEventList().add(event);
+            sessionRepository.save(session);
+            return event;
+        } else {
+            return null;
+        }
     }
 
     public Optional<SessionAggregatedEvents> getSessionAggregatedEvents(String sessionId) {

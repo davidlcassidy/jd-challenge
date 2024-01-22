@@ -11,9 +11,12 @@ import java.time.LocalDateTime
 class SessionServiceTest extends Specification {
 
     // Variables
-    def sessionId = "testSessionId"
-    def machineId = "testMachineId"
+    static sessionId = UUID.randomUUID().toString()
+    static machineId = UUID.randomUUID().toString()
     def startAt = LocalDateTime.now()
+    def eventAt = LocalDateTime.now().toString()
+    def eventType = "TestEventType"
+    def numericEventValue = 42.0
     def sessionList = [
             Session.builder().sessionId("session1").machineId("machine1").startAt(LocalDateTime.now()).build(),
             Session.builder().sessionId("session2").machineId("machine1").startAt(LocalDateTime.now().minusDays(1)).build(),
@@ -47,6 +50,32 @@ class SessionServiceTest extends Specification {
         result.sessionId == sessionId
         result.machineId == machineId
         result.startAt == startAt
+    }
+
+    def "createSessionEvent should create and save an event"() {
+        when:
+        def result = sessionService.createSessionEvent(sessionId, eventAt, eventType, numericEventValue)
+
+        then:
+        1 * sessionRepository.findBySessionId(sessionId) >> sessionList[0]
+        1 * sessionRepository.save(sessionList[0]) >> Session.builder().build()
+
+        and:
+        result != null
+        result.eventAt == eventAt
+        result.eventType == eventType
+        result.numericEventValue == numericEventValue
+    }
+
+    def "createSessionEvent should return null for unknown session"() {
+        when:
+        def result = sessionService.createSessionEvent(sessionId, eventAt, eventType, numericEventValue)
+
+        then:
+        1 * sessionRepository.findBySessionId(sessionId) >> null
+        0 * eventRepository.save(*_)
+
+        result == null
     }
 
     def "getSessionAggregatedEvents should return aggregated events for a session"() {
