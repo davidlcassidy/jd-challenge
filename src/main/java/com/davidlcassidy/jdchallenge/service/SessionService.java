@@ -8,6 +8,7 @@ import com.davidlcassidy.jdchallenge.repository.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class SessionService {
     @Autowired
     private EventRepository eventRepository;
 
-    public Session createSession(String sessionId, String machineId, String startAt) {
+    public Session createSession(String sessionId, String machineId, LocalDateTime startAt) {
         Session session = Session.builder().sessionId(sessionId).machineId(machineId).startAt(startAt).build();
         sessionRepository.save(session);
         return session;
@@ -52,5 +53,17 @@ public class SessionService {
                 .collect(Collectors.toList());
 
         return Optional.of(SessionAggregatedEvents.builder().sessionId(sessionId).events(eventAggregations).build());
+    }
+
+    public List<String> getMachineIds() {
+        List<Session> allSessions = sessionRepository.findAll();
+        return allSessions.stream()
+                .map(Session::getMachineId)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    public Optional<Session> getMostRecentSessionByMachineId(String machineId) {
+        return sessionRepository.findTopByMachineIdOrderByStartAtDesc(machineId);
     }
 }

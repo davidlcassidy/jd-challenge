@@ -6,12 +6,19 @@ import com.davidlcassidy.jdchallenge.repository.EventRepository
 import com.davidlcassidy.jdchallenge.repository.SessionRepository
 import spock.lang.Specification
 
+import java.time.LocalDateTime
+
 class SessionServiceTest extends Specification {
 
     // Variables
     def sessionId = "testSessionId"
     def machineId = "testMachineId"
-    def startAt = "2024-01-19T12:00:00"
+    def startAt = LocalDateTime.now()
+    def sessionList = [
+            Session.builder().sessionId("session1").machineId("machine1").startAt(LocalDateTime.now()).build(),
+            Session.builder().sessionId("session2").machineId("machine1").startAt(LocalDateTime.now().minusDays(1)).build(),
+            Session.builder().sessionId("session3").machineId("machine2").startAt(LocalDateTime.now().minusDays(2)).build()
+    ]
     def eventList = [
             Event.builder().eventType("Type1").numericEventValue(5.0).build(),
             Event.builder().eventType("Type2").numericEventValue(3.0).build(),
@@ -66,6 +73,44 @@ class SessionServiceTest extends Specification {
 
         then:
         1 * eventRepository.findBySession_SessionId(sessionId) >> []
+
+        and:
+        result.isEmpty()
+    }
+
+    def "getMachineIds should return a list of unique machine IDs"() {
+        when:
+        def result = sessionService.getMachineIds()
+
+        then:
+        1 * sessionRepository.findAll() >> sessionList
+
+        and:
+        result.size() == 2
+        result.contains("machine1")
+        result.contains("machine2")
+    }
+
+    def "getMostRecentSessionByMachineId should return the most recent session for a machine ID"() {
+        when:
+        def result = sessionService.getMostRecentSessionByMachineId(machineId)
+
+        then:
+        1 * sessionRepository.findTopByMachineIdOrderByStartAtDesc(machineId) >> Optional.of(sessionList[0])
+
+        and:
+        result.isPresent()
+        result.get().sessionId == "session1"
+        result.get().machineId == "machine1"
+        result.get().startAt == sessionList[0].startAt
+    }
+
+    def "getMostRecentSessionByMachineId should return empty when no sessions are found for a machine ID"() {
+        when:
+        def result = sessionService.getMostRecentSessionByMachineId("nonexistentMachineId")
+
+        then:
+        1 * sessionRepository.findTopByMachineIdOrderByStartAtDesc("nonexistentMachineId") >> Optional.empty()
 
         and:
         result.isEmpty()

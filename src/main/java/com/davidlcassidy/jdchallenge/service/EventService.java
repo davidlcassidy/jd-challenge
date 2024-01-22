@@ -38,8 +38,4 @@ public class EventService {
         }
     }
 
-    public List<Event> getEventsBySessionId(String sessionId) {
-        return eventRepository.findBySession_SessionId(sessionId);
-    }
-
 }

@@ -3,9 +3,14 @@ package com.davidlcassidy.jdchallenge.repository;
 import com.davidlcassidy.jdchallenge.model.Session;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface SessionRepository extends JpaRepository<Session, String> {
 
     Session findBySessionId(String sessionId);
 
-    Session save(Session session);
+    Optional<Session> findTopByMachineIdOrderByStartAtDesc(String machineId);
+
+    List<Session> findAll();
 }
