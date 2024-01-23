@@ -38,11 +38,13 @@ Open the `application.properties` file and update the properties with your local
 
 ### Current Architecture Diagram
 
+I tried to limit my dev effort to eight hours as specified in the requirements document and unfortunately I ran out of time to implement everything I wanted to. The biggest item is I wasn't able to integrate in a queue, so I create two POST requests instead to allow the microservice to be fully tested. 
+
 ![Architecture Diagram](images/current_architecture_diagram.jpg)
 
 ### Future Improvements
 
-I tried to limit my dev effort to eight hours as specified in the requirements document and unfortunately I ran out of time to implement everything I wanted to. I didn't have time to integrate in a queue, so I create two POST requests instead to allow the microservice to be fully tested. I was also not able build a deployment pipeline, but I documented what I was planning with blue arrows in the image below.
+Along with the queue, I was also not able build a deployment pipeline, but I documented what I was planning with blue arrows in the image below.
 
 ![Future Improvements](images/future_improvements.jpg)
 
