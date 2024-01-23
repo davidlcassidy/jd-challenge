@@ -1,5 +1,18 @@
 # John Deere Challenge Microservice
 
+- [Dependencies](#dependencies)
+- [Setting Up the Project](#setting-up-the-project)
+  - [1. Clone the Repository](#1-clone-the-repository)
+  - [2. Update Application Properties with Local Database Credentials](#2-update-application-properties-with-local-database-credentials)
+- [Running the Microservice Locally](#running-the-microservice-locally)
+  - [Using IntelliJ](#using-intellij)
+  - [Using Docker](#using-docker)
+- [Architectural Documentation](#architectural-documentation)
+  - [Current Architecture Diagram](#current-architecture-diagram)
+  - [Future Improvements](#future-improvements)
+- [Swagger API Documentation](#swagger-api-documentation)
+- [Postman Queries](#postman-queries)
+
 ## Dependencies
 
 - [Java](https://www.java.com/en/download/)
@@ -38,7 +51,7 @@ Open the `application.properties` file and update the properties with your local
 
 ### Current Architecture Diagram
 
-I tried to limit my dev effort to eight hours as specified in the requirements document and unfortunately I ran out of time to implement everything I wanted to. The biggest item is I wasn't able to integrate in a queue, so I create two POST requests instead to allow the microservice to be fully tested. 
+I tried to limit my dev effort to eight hours as specified in the requirements document and unfortunately I ran out of time before I could to implement everything I wanted to. The biggest item I missed was the integration of a queue, so I create two POST requests instead to allow the microservice to be fully tested. 
 
 ![Architecture Diagram](images/current_architecture_diagram.jpg)
 
