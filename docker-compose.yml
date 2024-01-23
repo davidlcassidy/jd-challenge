@@ -1,0 +1,27 @@
+version: '3'
+services:
+  jdchallenge:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/jd_challenge_database
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1AZKH60gxZQWqY8EIMQqBlXvJ2RJJtR0dydCOgMsLpmY
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+  mysql:
+    image: mysql:latest
+    command: --init-file /docker-entrypoint-initdb.d/init.sql
+    environment:
+      MYSQL_DATABASE: jd_challenge_database
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: 1AZKH60gxZQWqY8EIMQqBlXvJ2RJJtR0dydCOgMsLpmY
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"

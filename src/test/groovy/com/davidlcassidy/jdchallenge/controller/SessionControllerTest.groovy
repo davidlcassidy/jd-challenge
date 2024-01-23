@@ -1,5 +1,6 @@
 package com.davidlcassidy.jdchallenge.controller
 
+import com.davidlcassidy.jdchallenge.model.Event
 import com.davidlcassidy.jdchallenge.model.Session
 import com.davidlcassidy.jdchallenge.model.SessionAggregatedEvents
 import com.davidlcassidy.jdchallenge.service.SessionService
@@ -7,12 +8,17 @@ import org.springframework.http.HttpStatus
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import java.time.LocalDateTime
+
 class SessionControllerTest extends Specification {
 
     // Variables
     static sessionId = UUID.randomUUID().toString()
     static machineId = UUID.randomUUID().toString()
     static sessionAggregatedEvents = SessionAggregatedEvents.builder().build()
+    static eventType = "Type1"
+    static numericEventValue = 5.0
+    static event = Event.builder().eventType(eventType).numericEventValue(numericEventValue).build()
 
     // Services
     SessionService sessionService = Mock()
@@ -42,7 +48,7 @@ class SessionControllerTest extends Specification {
     }
 
     @Unroll
-    def "getSessionAggregatedEvents should return correct status code when #scenario"() {
+    def "getSessionAggregatedEvents should return #expectedStatusCode when #scenario"() {
         when:
         def response = sessionController.getSessionAggregatedEvents(machineId, sessionId)
 
@@ -54,8 +60,8 @@ class SessionControllerTest extends Specification {
         scenario                 | sessionId | machineId | expectedResult                       | expectedStatusCode
         "valid request"          | sessionId | machineId | Optional.of(sessionAggregatedEvents) | HttpStatus.OK
         "non-existent sessionId" | sessionId | machineId | Optional.empty()                     | HttpStatus.NO_CONTENT
-        "invalid sessionId parm" | null      | machineId | null                                 | HttpStatus.BAD_REQUEST
-        "invalid machineId parm" | sessionId | null      | null                                 | HttpStatus.BAD_REQUEST
+        "invalid sessionId"      | null      | machineId | null                                 | HttpStatus.BAD_REQUEST
+        "invalid machineId"      | sessionId | null      | null                                 | HttpStatus.BAD_REQUEST
     }
 
     def "getMachineIds should return machine IDs"() {
@@ -103,6 +109,45 @@ class SessionControllerTest extends Specification {
         then:
         1 * sessionService.getMostRecentSessionByMachineId(machineId) >> Optional.empty()
         response.statusCode == HttpStatus.NO_CONTENT
+    }
+
+    @Unroll
+    def "newSession should return #expectedStatusCode and call service method when #scenario"() {
+        when:
+        def response = sessionController.newSession(sessionId, machineId)
+
+        then:
+        response.statusCode == expectedStatusCode
+        serviceCalls * sessionService.createSession(sessionId, machineId, _ as LocalDateTime)
+
+        where:
+        scenario                    | sessionId | machineId | serviceCalls | expectedStatusCode
+        "valid request"               | sessionId | machineId | 1            | HttpStatus.CREATED
+        "empty sessionId"           | ""        | machineId | 0            | HttpStatus.BAD_REQUEST
+        "null sessionId"            | null      | machineId | 0            | HttpStatus.BAD_REQUEST
+        "empty machineId"           | sessionId | ""        | 0            | HttpStatus.BAD_REQUEST
+        "null machineId"            | sessionId | null      | 0            | HttpStatus.BAD_REQUEST
+        "empty sessionId/machineId" | ""        | ""        | 0            | HttpStatus.BAD_REQUEST
+        "null sessionId/machineId"  | null      | null      | 0            | HttpStatus.BAD_REQUEST
+    }
+
+    @Unroll
+    def "newEvent should return #expectedStatusCode and call service method when #scenario"() {
+        when:
+        def response = sessionController.newEvent(sessionId, eventType, numericEventValue)
+
+        then:
+        response.statusCode == expectedStatusCode
+        serviceCalls * sessionService.createSessionEvent(sessionId, _ as String, eventType, numericEventValue) >> sessionReturn
+
+        where:
+        scenario            | sessionId | eventType | serviceCalls | sessionReturn | expectedStatusCode
+        "valid request"       | sessionId | eventType | 1            | event         | HttpStatus.CREATED
+        "invalid sessionId" | ""        | eventType | 0            | null          | HttpStatus.BAD_REQUEST
+        "empty sessionId"   | ""        | eventType | 0            | null          | HttpStatus.BAD_REQUEST
+        "null sessionId"    | null      | eventType | 0            | null          | HttpStatus.BAD_REQUEST
+        "empty eventType"   | sessionId | ""        | 0            | null          | HttpStatus.BAD_REQUEST
+        "null eventType"    | sessionId | null      | 0            | null          | HttpStatus.BAD_REQUEST
     }
 
 }
