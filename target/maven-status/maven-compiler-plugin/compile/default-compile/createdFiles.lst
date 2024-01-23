@@ -1,0 +1,13 @@
+com\davidlcassidy\jdchallenge\model\SessionAggregatedEvents.class
+com\davidlcassidy\jdchallenge\service\SessionService.class
+com\davidlcassidy\jdchallenge\repository\EventRepository.class
+com\davidlcassidy\jdchallenge\config\SwaggerConfig.class
+com\davidlcassidy\jdchallenge\model\Session$SessionBuilder.class
+com\davidlcassidy\jdchallenge\model\Event.class
+com\davidlcassidy\jdchallenge\model\Event$EventBuilder.class
+com\davidlcassidy\jdchallenge\controller\SessionController.class
+com\davidlcassidy\jdchallenge\JDChallenge.class
+com\davidlcassidy\jdchallenge\model\SessionAggregatedEvents$EventAggregation.class
+com\davidlcassidy\jdchallenge\model\SessionAggregatedEvents$SessionAggregatedEventsBuilder.class
+com\davidlcassidy\jdchallenge\repository\SessionRepository.class
+com\davidlcassidy\jdchallenge\model\Session.class
