@@ -1,0 +1,586 @@
+{
+	"info": {
+		"_postman_id": "6b630249-6e64-4df7-b82d-53a4fc60f6f8",
+		"name": "John Deere Coding Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32500812"
+	},
+	"item": [
+		{
+			"name": "newSession",
+			"item": [
+				{
+					"name": "Add a new session",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/newSession?sessionId=<string>&machineId=<string>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"newSession"
+							],
+							"query": [
+								{
+									"key": "sessionId",
+									"value": "<string>",
+									"description": "(Required) "
+								},
+								{
+									"key": "machineId",
+									"value": "<string>",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "Add a new session"
+					},
+					"response": [
+						{
+							"name": "New session added successfully",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/newSession?sessionId=<string>&machineId=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"newSession"
+									],
+									"query": [
+										{
+											"key": "sessionId",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "machineId",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Invalid input",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/newSession?sessionId=<string>&machineId=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"newSession"
+									],
+									"query": [
+										{
+											"key": "sessionId",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "machineId",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "newEvent",
+			"item": [
+				{
+					"name": "Add a new event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/newEvent?sessionId=<string>&eventType=<string>&numericEventValue=<double>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"newEvent"
+							],
+							"query": [
+								{
+									"key": "sessionId",
+									"value": "<string>",
+									"description": "(Required) "
+								},
+								{
+									"key": "eventType",
+									"value": "<string>",
+									"description": "(Required) "
+								},
+								{
+									"key": "numericEventValue",
+									"value": "<double>",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "Add a new event for an existing session"
+					},
+					"response": [
+						{
+							"name": "New event added successfully",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/newEvent?sessionId=<string>&eventType=<string>&numericEventValue=<double>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"newEvent"
+									],
+									"query": [
+										{
+											"key": "sessionId",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "eventType",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "numericEventValue",
+											"value": "<double>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Invalid input",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/newEvent?sessionId=<string>&eventType=<string>&numericEventValue=<double>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"newEvent"
+									],
+									"query": [
+										{
+											"key": "sessionId",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "eventType",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "numericEventValue",
+											"value": "<double>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "machines",
+			"item": [
+				{
+					"name": "{machineId}",
+					"item": [
+						{
+							"name": "mostRecentSession",
+							"item": [
+								{
+									"name": "Get the most recent session for a machine",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/machines/:machineId/mostRecentSession",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"machines",
+												":machineId",
+												"mostRecentSession"
+											],
+											"variable": [
+												{
+													"key": "machineId",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										},
+										"description": "Retrieve the most recent session for a specific machine"
+									},
+									"response": [
+										{
+											"name": "Successfully retrieved the most recent session",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/machines/:machineId/mostRecentSession",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"machines",
+														":machineId",
+														"mostRecentSession"
+													],
+													"variable": [
+														{
+															"key": "machineId"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"sessionId\": \"<string>\",\n  \"machineId\": \"<string>\",\n  \"startAt\": \"<dateTime>\",\n  \"eventList\": [\n    {\n      \"eventId\": \"<integer>\",\n      \"eventAt\": \"<string>\",\n      \"eventType\": \"<string>\",\n      \"numericEventValue\": \"<double>\"\n    },\n    {\n      \"eventId\": \"<integer>\",\n      \"eventAt\": \"<string>\",\n      \"eventType\": \"<string>\",\n      \"numericEventValue\": \"<double>\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "No content available for the requested machine",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/machines/:machineId/mostRecentSession",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"machines",
+														":machineId",
+														"mostRecentSession"
+													],
+													"variable": [
+														{
+															"key": "machineId"
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Get machine IDs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/machines",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"machines"
+							]
+						},
+						"description": "Retrieve a list of all machine IDs"
+					},
+					"response": [
+						{
+							"name": "Successfully retrieved machine IDs",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/machines",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"machines"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  \"<string>\",\n  \"<string>\"\n]"
+						},
+						{
+							"name": "No machine IDs available",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/machines",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"machines"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "events",
+			"item": [
+				{
+					"name": "Get session aggregated events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/events?machineId=<string>&sessionId=<string>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events"
+							],
+							"query": [
+								{
+									"key": "machineId",
+									"value": "<string>",
+									"description": "(Required) "
+								},
+								{
+									"key": "sessionId",
+									"value": "<string>",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "Retrieve aggregated events for a session"
+					},
+					"response": [
+						{
+							"name": "Successfully retrieved session aggregated events",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/events?machineId=<string>&sessionId=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events"
+									],
+									"query": [
+										{
+											"key": "machineId",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "sessionId",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"sessionId\": \"<string>\",\n  \"events\": [\n    {\n      \"eventType\": \"<string>\",\n      \"totalEventValue\": \"<double>\"\n    },\n    {\n      \"eventType\": \"<string>\",\n      \"totalEventValue\": \"<double>\"\n    }\n  ]\n}"
+						},
+						{
+							"name": "No content available for the requested session",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/events?machineId=<string>&sessionId=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events"
+									],
+									"query": [
+										{
+											"key": "machineId",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "sessionId",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad request, machineId or sessionId is missing or empty",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/events?machineId=<string>&sessionId=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events"
+									],
+									"query": [
+										{
+											"key": "machineId",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "sessionId",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}
