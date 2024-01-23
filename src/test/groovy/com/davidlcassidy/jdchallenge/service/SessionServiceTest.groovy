@@ -17,16 +17,17 @@ class SessionServiceTest extends Specification {
     def eventAt = LocalDateTime.now().toString()
     def eventType = "TestEventType"
     def numericEventValue = 42.0
-    def sessionList = [
-            Session.builder().sessionId("session1").machineId("machine1").startAt(LocalDateTime.now()).build(),
-            Session.builder().sessionId("session2").machineId("machine1").startAt(LocalDateTime.now().minusDays(1)).build(),
-            Session.builder().sessionId("session3").machineId("machine2").startAt(LocalDateTime.now().minusDays(2)).build()
-    ]
     def eventList = [
             Event.builder().eventType("Type1").numericEventValue(5.0).build(),
             Event.builder().eventType("Type2").numericEventValue(3.0).build(),
             Event.builder().eventType("Type1").numericEventValue(2.0).build()
     ]
+    def sessionList = [
+            Session.builder().sessionId("session1").machineId("machine1").startAt(LocalDateTime.now()).eventList(eventList).build(),
+            Session.builder().sessionId("session2").machineId("machine1").startAt(LocalDateTime.now().minusDays(1)).eventList(eventList).build(),
+            Session.builder().sessionId("session3").machineId("machine2").startAt(LocalDateTime.now().minusDays(2)).eventList(eventList).build()
+    ]
+    def sessionOptional = Optional.of(sessionList[0])
 
     // Repositories
     def sessionRepository = Mock(SessionRepository)
@@ -80,10 +81,10 @@ class SessionServiceTest extends Specification {
 
     def "getSessionAggregatedEvents should return aggregated events for a session"() {
         when:
-        def result = sessionService.getSessionAggregatedEvents(sessionId)
+        def result = sessionService.getSessionAggregatedEvents(sessionId, machineId)
 
         then:
-        1 * eventRepository.findBySession_SessionId(sessionId) >> eventList
+        1 * sessionRepository.findTopByMachineIdAndSessionIdOrderByStartAtDesc(sessionId, machineId) >> sessionOptional
 
         and:
         result.isPresent()
@@ -98,10 +99,21 @@ class SessionServiceTest extends Specification {
 
     def "getSessionAggregatedEvents should return empty for a session with no events"() {
         when:
-        def result = sessionService.getSessionAggregatedEvents(sessionId)
+        def result = sessionService.getSessionAggregatedEvents(sessionId, machineId)
 
         then:
-        1 * eventRepository.findBySession_SessionId(sessionId) >> []
+        1 * sessionRepository.findTopByMachineIdAndSessionIdOrderByStartAtDesc(sessionId, machineId) >> Optional.of(Session.builder().build())
+
+        and:
+        result.isEmpty()
+    }
+
+    def "getSessionAggregatedEvents should return empty for a non existing session"() {
+        when:
+        def result = sessionService.getSessionAggregatedEvents(sessionId, machineId)
+
+        then:
+        1 * sessionRepository.findTopByMachineIdAndSessionIdOrderByStartAtDesc(sessionId, machineId) >> Optional.empty()
 
         and:
         result.isEmpty()

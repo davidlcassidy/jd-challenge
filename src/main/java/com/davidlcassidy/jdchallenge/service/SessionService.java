@@ -49,8 +49,13 @@ public class SessionService {
         }
     }
 
-    public Optional<SessionAggregatedEvents> getSessionAggregatedEvents(String sessionId) {
-        List<Event> sessionEventList = eventRepository.findBySession_SessionId(sessionId);
+    public Optional<SessionAggregatedEvents> getSessionAggregatedEvents(String sessionId, String machineId) {
+        Optional<Session> sessionOptional = sessionRepository.findTopByMachineIdAndSessionIdOrderByStartAtDesc(sessionId, machineId);
+
+        if (sessionOptional.isEmpty()){
+            return Optional.empty();
+        }
+        List<Event> sessionEventList = sessionOptional.get().getEventList();
 
         if (sessionEventList.isEmpty()) {
             return Optional.empty();

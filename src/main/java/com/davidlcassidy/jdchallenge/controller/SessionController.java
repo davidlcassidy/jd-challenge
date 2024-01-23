@@ -55,7 +55,7 @@ public class SessionController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        Optional<SessionAggregatedEvents> sessionAggregatedEvents = sessionService.getSessionAggregatedEvents(sessionId);
+        Optional<SessionAggregatedEvents> sessionAggregatedEvents = sessionService.getSessionAggregatedEvents(sessionId, machineId);
 
         if (sessionAggregatedEvents.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

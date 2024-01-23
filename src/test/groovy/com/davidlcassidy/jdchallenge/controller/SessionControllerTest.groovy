@@ -42,7 +42,7 @@ class SessionControllerTest extends Specification {
         def response = sessionController.getSessionAggregatedEvents(machineId, sessionId)
 
         then:
-        1 * sessionService.getSessionAggregatedEvents(sessionId) >> Optional.of(expectedEvents)
+        1 * sessionService.getSessionAggregatedEvents(sessionId, machineId) >> Optional.of(expectedEvents)
         response.statusCode == HttpStatus.OK
         response.body == expectedEvents
     }
@@ -53,7 +53,7 @@ class SessionControllerTest extends Specification {
         def response = sessionController.getSessionAggregatedEvents(machineId, sessionId)
 
         then:
-        (expectedResult != null ? 1 : 0) * sessionService.getSessionAggregatedEvents(sessionId) >> expectedResult
+        (expectedResult != null ? 1 : 0) * sessionService.getSessionAggregatedEvents(sessionId, machineId) >> expectedResult
         response.statusCode == expectedStatusCode
 
         where:

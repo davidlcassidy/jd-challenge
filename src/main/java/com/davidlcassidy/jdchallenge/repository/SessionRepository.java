@@ -10,6 +10,8 @@ public interface SessionRepository extends JpaRepository<Session, String> {
 
     Session findBySessionId(String sessionId);
 
+    Optional<Session> findTopByMachineIdAndSessionIdOrderByStartAtDesc(String machineId, String sessionId);
+
     Optional<Session> findTopByMachineIdOrderByStartAtDesc(String machineId);
 
     List<Session> findAll();
