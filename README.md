@@ -51,7 +51,7 @@ Open the `application.properties` file and update the properties with your local
 
 ### Current Architecture Diagram
 
-I tried to limit my dev effort to eight hours as specified in the requirements document and unfortunately I ran out of time before I could to implement everything I wanted to. The biggest item I missed was the integration of a queue, so I create two POST requests instead to allow the microservice to be fully tested. 
+I tried to limit my dev effort to eight hours as specified in the requirements document and unfortunately I ran out of time before I could implement everything I wanted to. The biggest item I missed was the integration of a queue, so I created two POST requests instead to allow the microservice to be fully tested. 
 
 ![Architecture Diagram](images/current_architecture_diagram.jpg)
 
